@@ -13,6 +13,8 @@ export class ClientesComponent implements OnInit {
 
   formClientes!: FormGroup;
   clientes: Clientes[] = [];
+  cliente!: Clientes;
+  clienteDeletado: any;
   clienteEditar!: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -26,16 +28,18 @@ export class ClientesComponent implements OnInit {
   ngOnInit() {
     this.clienteEditar = false;
     this.initForms();
+    this.getClientes();
+  }
+
+  getClientes() {
     this.apiService.get()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-      next: (res: Clientes[]) => {
-        console.log(res)
-        this.clientes = res;
-      }
+        next: (res: Clientes[]) => {
+          console.log(res)
+          this.clientes = res;
+        }
       })
-    
-    
   }
 
   initForms() {
@@ -58,6 +62,7 @@ export class ClientesComponent implements OnInit {
         .subscribe({
         next: (res: Clientes) => {
           this.ngOnInit();
+          this.cliente = res;
         }
         })
       
@@ -68,6 +73,7 @@ export class ClientesComponent implements OnInit {
         .subscribe({
         next: (res: Clientes) => {
           this.ngOnInit();
+          this.cliente = res;
         }
         })
       
@@ -91,6 +97,7 @@ export class ClientesComponent implements OnInit {
       .subscribe({
       next: (res: any) => {
         this.ngOnInit()
+        this.clienteDeletado = res
       }
       })
   }
