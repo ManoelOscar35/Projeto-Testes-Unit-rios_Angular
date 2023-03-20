@@ -6,6 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from 'src/app/api.service';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 describe('ClientesComponent', () => {
   let component: ClientesComponent;
@@ -27,6 +28,26 @@ describe('ClientesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Deve validar o h1', () => {
+    let title = fixture.debugElement.query(By.css('h1')).nativeElement;
+
+    expect(title.textContent).toBe('Clientes');
+  });
+
+  it('Deve validar o button warning', () => {
+    let btnWarning = fixture.debugElement.query(By.css('button')).nativeElement
+    btnWarning.style.backgroundColor = 'yellow'
+    fixture.detectChanges()
+    expect(btnWarning.style.backgroundColor).toBe('yellow');
+  });
+
+  it('Deve validar o button danger', () => {
+    let btnWarning = fixture.debugElement.query(By.css('button')).nativeElement
+    btnWarning.style.backgroundColor = 'red'
+    fixture.detectChanges()
+    expect(btnWarning.style.backgroundColor).toBe('red');
   });
 
   it('Deve fazer request para obter lista de clientes', () => {
